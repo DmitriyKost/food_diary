@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <style>
+        .progress-bar {
+            width: 100%;
+            background-color: #f3f3f3;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 20px;
+            background-color: #4caf50;
+            width: {{ calories_percentage|round(2) }}%;
+        }
+        .progress-bar-protein-fill {
+            height: 20px;
+            background-color: #ff9800;
+            width: {{ protein_percentage|round(2) }}%;
+        }
+        .progress-bar-carbs-fill {
+            height: 20px;
+            background-color: #2196f3;
+            width: {{ carbs_percentage|round(2) }}%;
+        }
+        .progress-bar-fat-fill {
+            height: 20px;
+            background-color: #f44336;
+            width: {{ fat_percentage|round(2) }}%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome {{ user }}</h1>
+    
+    <h2>Caloric Intake</h2>
+    <form method="get" action="{{ url_for('index') }}">
+        <label for="date">Select Date:</label>
+        <input type="date" id="date" name="date" value="{{ selected_date }}">
+        <button type="submit">View</button>
+    </form>
+    <div class="progress-bar">
+        <div class="progress-bar-fill"></div>
+    </div>
+    <p>{{ total_calories_today }} / {{ daily_calories_needed }} calories ({{ calories_percentage|round(2) }}%)</p>
+    
+    <h2>Protein Intake</h2>
+    <div class="progress-bar">
+        <div class="progress-bar-protein-fill"></div>
+    </div>
+    <p>{{ total_protein_today }} / {{ daily_protein_needed }} grams ({{ protein_percentage|round(2) }}%)</p>
+    
+    <h2>Carbohydrate Intake</h2>
+    <div class="progress-bar">
+        <div class="progress-bar-carbs-fill"></div>
+    </div>
+    <p>{{ total_carbs_today }} / {{ daily_carbs_needed }} grams ({{ carbs_percentage|round(2) }}%)</p>
+    
+    <h2>Fat Intake</h2>
+    <div class="progress-bar">
+        <div class="progress-bar-fat-fill"></div>
+    </div>
+    <p>{{ total_fat_today }} / {{ daily_fat_needed }} grams ({{ fat_percentage|round(2) }}%)</p>
+
+    <a href="{{ url_for('update_profile') }}">Update Profile</a>
+    
+    <h2>Your Meals for {{ selected_date }}</h2>
+    <ul>
+        {% for meal in meals %}
+            <li>
+                <a href="{{ url_for('meal_entry', meal_entry_id=meal.id) }}">
+                    {{ meal.meal.name }} - {{ meal.date }}
+                </a>
+                (Calories: {{ meal.calories }}, Protein: {{ meal.protein }}g, Carbs: {{ meal.carbs }}g, Fat: {{ meal.fat }}g)
+                <form method="post" action="{{ url_for('delete_meal_entry', meal_entry_id=meal.id) }}" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Add Meal</h2>
+    <form method="post" action="/add_meal">
+        <label for="name">Meal Name:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Add Meal</button>
+    </form>
+
+    <h2>Add Meal Entry</h2>
+    <form method="get" action="/add_meal_entry">
+        <button type="submit">Add Meal Entry</button>
+    </form>
+
+    <form method="post" action="{{ url_for('logout') }}">
+        <button type="submit">Logout</button>
+    </form>
+</body>
+</html>

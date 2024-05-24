@@ -1,0 +1,15 @@
+blinker            
+click             
+Flask              
+Flask-JWT-Extended 
+Flask-SQLAlchemy   
+itsdangerous       
+Jinja2             
+MarkupSafe         
+pip                
+PyJWT              
+setuptools         
+SQLAlchemy         
+typing_extensions  
+Werkzeug           
+python-dotenv
