@@ -13,3 +13,4 @@ SQLAlchemy
 typing_extensions  
 Werkzeug           
 python-dotenv
+gunicorn

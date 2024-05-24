@@ -1,4 +1,5 @@
 from os import getenv
+import os
 from flask import Flask, render_template, request, redirect, url_for, make_response, flash
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, set_access_cookies, unset_jwt_cookies
 from database import db, User, Meal, MealEntry
@@ -261,8 +262,9 @@ def update_profile():
 
     return render_template('update_profile.html', user=user)
 
-
-if __name__ == '__main__':
+def init_db():
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+
+if __name__ == '__main__':
+        app.run(debug=True)
