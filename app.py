@@ -1,5 +1,5 @@
 from os import getenv
-from flask import Flask, render_template, request, redirect, url_for, make_response
+from flask import Flask, render_template, request, redirect, url_for, make_response, flash
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity, set_access_cookies, unset_jwt_cookies
 from database import db, User, Meal, MealEntry
 from dotenv import load_dotenv
@@ -9,6 +9,7 @@ import datetime
 load_dotenv(".env")
 
 app = Flask(__name__)
+app.secret_key = getenv("APP_SECRET_KEY")
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['JWT_SECRET_KEY'] = getenv("JWT_SECRET_KEY")
 app.config['JWT_TOKEN_LOCATION'] = ['cookies']
@@ -107,7 +108,8 @@ def register():
         activity_coefficient = request.form['activity_coefficient']
         
         if User.query.filter_by(login=login).first():
-            return "User already exists"
+            flash('User already exists', 'error')
+            return redirect(url_for('register'))
 
         new_user = User(
             login=login,

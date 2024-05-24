@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
+    <script>
+        function showMessage() {
+            var messages = "{{ get_flashed_messages(with_categories=true) }}";
+            if (messages != "[]") {
+                alert("User already exists!");
+            }    
+        }
+    </script>
 </head>
-<body>
+<body onload="showMessage()">
     <h1>Register</h1>
     <form method="post">
         <label for="login">Login:</label>
