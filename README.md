@@ -7,8 +7,6 @@ The service is a food diary and meal tracking application that allows users to m
 - Nutritional Analysis: The service calculates and displays the total daily intake of calories, protein, carbohydrates, and fat, allowing users to monitor their nutritional goals.
 - Profile Management: Users can update their profile information including age, weight, height, sex, and activity coefficient to calculate their daily caloric needs.
 
-
-## How does it works?
 ### Technologies Used:
 - Python for backend
 - SQLite as database
